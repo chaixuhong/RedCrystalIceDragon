@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>提示hover</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="课程表_PC2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon" transform="translate(-856.000000, -70.000000)" fill="#4F87FB">
+            <path d="M865,88 C860.029437,88 856,83.9705627 856,79 C856,74.0294373 860.029437,70 865,70 C869.970563,70 874,74.0294373 874,79 C874,83.9705627 869.970563,88 865,88 Z M865,86 C868.865993,86 872,82.8659932 872,79 C872,75.1340068 868.865993,72 865,72 C861.134007,72 858,75.1340068 858,79 C858,82.8659932 861.134007,86 865,86 Z M864,77 L866,77 L866,84 L864,84 L864,77 Z M864,74 L866,74 L866,76 L864,76 L864,74 Z" id="提示hover"></path>
+        </g>
+    </g>
+</svg>

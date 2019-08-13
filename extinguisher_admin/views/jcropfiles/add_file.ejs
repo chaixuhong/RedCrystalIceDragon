@@ -1,0 +1,124 @@
+<link rel="stylesheet" type="text/css" href="/admin/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/admin/css/jquery.Jcrop.min.css">
+<script src="/admin/js/jquery-2.0.3.min.js"></script>
+<script src="/admin/bootstrap/js/bootstrap.js"></script>
+<script src="/admin/js/jquery.form.js"></script>
+<script src="/admin/layer/layer.js"></script>
+<script src="/admin/js/jquery.Jcrop.min.js"></script>
+<style>
+    * {
+        font-size: 13px;
+    }
+
+    #imgSelectDIV {
+        display: table-cell !important;
+        display: block;
+        position: static !important;
+        position: relative;
+        overflow: hidden;
+        width: 700px;
+        max-width: 700px;
+        height: 500px;
+        max-height: 500px;
+        border: 1px solid #cdcece;
+        vertical-align: middle;
+        text-align: center;
+    }
+</style>
+<form class="form-horizontal" role="form" action='/admin/jcrop/add_file' method="post" id="fileform"
+    enctype="application/x-www-form-urlencoded">
+    <table class="table">
+        <tr>
+            <td>
+                <div id="imgSelectDIV">
+                    <img src="<%= showpath %>" id="target" style=" max-width: 700px; max-height: 500px;" />
+                    <input type="hidden" id="path" name="path" value="<%= path %>" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                <div style="display: none">
+                    x1<input type="text" size="4" id="x1" name="x1" />
+                    y1<input type="text" size="4" id="y1" name="y1" />
+                    w<input type="text" size="4" id="w" name="w" />
+                    h<input type="text" size="4" id="h" name="h" />
+                    resizeW<input type="text" size="4" id="resizeW" name="resizeW" value="70" />
+                    resizeW<input type="text" size="4" id="resizeH" name="resizeH" value="70" />
+                    比例<input type="text" size="4" id="Ratio" name="Ratio" value="<%= ratio %>" />
+                </div>
+                <button type="button" id="btncancel" class="btn btn-default">取消裁剪
+                </button>
+                <button type="button" id="btnadd" class="btn btn-primary">保存裁剪
+                </button>
+            </td>
+        </tr>
+    </table>
+</form>
+<input type="hidden" id="setSelect" value="<%= setSelect %>" />
+<input type="hidden" id="minSize" value="<%= minSize %>" />
+<input type="hidden" id="aspectRatio" value="<%= aspectRatio %>" />
+<input type="hidden" id="wh" value="<%= wh %>" />
+<script type="text/javascript">
+    jQuery(function ($) {
+        var jcrop_api;
+        var setSelect = $("#setSelect").val().split('_');
+        var minSize = $("#minSize").val().split('_');
+        var aspectRatio = $("#aspectRatio").val().split('_');
+        var wh = parseFloat($("#wh").val());
+        console.log(wh)
+        $('#target').Jcrop({
+            aspectRatio: aspectRatio[0] / aspectRatio[1],
+            setSelect: [setSelect[0], setSelect[1], setSelect[2] * wh, setSelect[3] * wh],
+            minSize: [minSize[0] * wh, minSize[1] * wh],
+            onChange: showCoords,
+            onSelect: showCoords,
+            allowSelect: false
+        }, function () {
+            jcrop_api = this;
+        });
+    });
+
+    function showCoords(c) {
+        $('#x1').val(c.x);
+        $('#y1').val(c.y);
+        $('#w').val(c.w);
+        $('#h').val(c.h);
+    }
+</script>
+<script>
+    $(function () {
+        $("#btnadd").click(function () {
+            add()
+        });
+        $("#btncancel").click(function () {
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            parent.layer.close(index);
+        });
+    });
+
+    function add() {
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+        layer.msg("处理中，请稍后...", {
+            shade: [0.5, '#000']
+        });
+        var options = {
+            dataType: "json",
+            success: function (d) {
+                switch (d.ret_code) {
+                    case 0:
+                        parent.setImageUrl(d.ret_msg);
+                        parent.layer.close(index);
+                        break;
+                    case 1:
+                        layer.msg('添加失败', {
+                            icon: 5
+                        });
+                        break;
+                }
+            },
+            error: function () {}
+        };
+        $('#fileform').ajaxSubmit(options);
+    }
+</script>

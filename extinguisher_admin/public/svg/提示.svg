@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>提示</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="课程表_PC2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon" transform="translate(-875.000000, -70.000000)" fill="#959FB4">
+            <path d="M884,88 C879.029437,88 875,83.9705627 875,79 C875,74.0294373 879.029437,70 884,70 C888.970563,70 893,74.0294373 893,79 C893,83.9705627 888.970563,88 884,88 Z M884,86 C887.865993,86 891,82.8659932 891,79 C891,75.1340068 887.865993,72 884,72 C880.134007,72 877,75.1340068 877,79 C877,82.8659932 880.134007,86 884,86 Z M883,77 L885,77 L885,84 L883,84 L883,77 Z M883,74 L885,74 L885,76 L883,76 L883,74 Z" id="提示"></path>
+        </g>
+    </g>
+</svg>

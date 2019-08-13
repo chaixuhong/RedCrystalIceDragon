@@ -1,0 +1,41 @@
+<% include common/head.ejs %>
+<script src="js/echarts.min.js"></script>
+<body>
+<% include common/top.ejs %>
+<input type="hidden" id="leftFirstNavID" value="index"/>
+<input type="hidden" id="leftSecondNavID" value=""/>
+<section id="page">
+    <% include common/left.ejs %>
+    <div id="main-content">
+        <div class="container">
+            <div class="row">
+                <div id="content" class="col-lg-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="page-header">
+                                <ul class="breadcrumb">
+                                    <li>
+                                        <i class="fa fa-home"></i>
+                                        <a href="/admin/">首页</a>
+                                    </li>
+                                    <li>错误提示</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>请求错误</h1>
+                            <pre>状态：<%= error.status %></pre>
+                            <pre>信息：<%= message %></pre>
+                            <pre>堆栈：<%= error.stack %></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<% include common/bottom.ejs %>
+</body>
+</html>

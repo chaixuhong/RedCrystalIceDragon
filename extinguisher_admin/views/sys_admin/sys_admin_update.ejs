@@ -1,0 +1,178 @@
+<% include ../common/head.ejs %>
+<script src="/admin/js/jquery.form.js"></script>
+<script>
+    $(function () {
+        $("#btnok").click(function () {
+            add();
+        });
+        $("#btngoback").click(function () {
+            window.location = '/admin/sys_admin/list';
+        });
+    });
+
+    function add() {
+
+        var SchAppKey = $("#SchAppKey").val();
+        var SchAppSecret = $("#SchAppSecret").val();
+        var SchName = $("#SchName").val();
+        var MorningLesson = $("#MorningLesson").val();
+        var AfternoonLesson = $("#AfternoonLesson").val();
+        var EveningLesson = $("#EveningLesson").val();
+
+        if (SchAppKey == "") {
+            $("#div_error").html("AppKey不能为空");
+            return;
+        }
+        if (SchAppSecret == "") {
+            $("#div_error").html("AppSecret不能为空");
+            return;
+        }
+        if (SchName == "") {
+            $("#div_error").html("学校名称不能为空");
+            return;
+        }
+        if (MorningLesson == "") {
+            $("#div_error").html("上午课节数不能为空");
+            return;
+        }
+        if (AfternoonLesson == "") {
+            $("#div_error").html("下午课节数不能为空");
+            return;
+        }
+        if (EveningLesson == "") {
+            $("#div_error").html("晚上课节数不能为空");
+            return;
+        }
+        $("#div_error").html("");
+        layer.msg("处理中，请稍后...", {shade: [0.5, '#000']});
+        var options = {
+            dataType: "json",
+            success: function (d) {
+                switch (d.ret_code) {
+                    case 0:
+                        layer.msg('修改成功', {icon: 1});
+                        setTimeout('window.location = "/admin/sys_admin/list";', 1500);
+                        break;
+                    case 1:
+                        layer.msg('修改失败', {icon: 5});
+                        break;
+                }
+            },
+            error: function () {
+            }
+        };
+        $('#dataform').ajaxSubmit(options);
+    }
+</script>
+<body>
+<% include ../common/top.ejs %>
+<input type="hidden" id="leftFirstNavID" value="sys_admin"/>
+<input type="hidden" id="leftSecondNavID" value="schadmin_list"/>
+<section id="page">
+    <% include ../common/left.ejs %>
+    <div id="main-content">
+        <div class="container">
+            <div class="row">
+                <div id="content" class="col-lg-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="page-header">
+                                <ul class="breadcrumb">
+                                    <li>
+                                        <i class="fa fa-home"></i>
+                                        <a href="/admin/">首页</a>
+                                    </li>
+                                    <li>学校账号管理</li>
+                                    <li>编辑学校账号</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box border">
+                                <div class="box-body big">
+                                    <form class="form-horizontal" role="form" action='/admin/sys_admin/update' method="post"
+                                          id="dataform" enctype="application/x-www-form-urlencoded">
+                                        <input type="hidden" id="SchCode" name="SchCode"
+                                               value="<%= SchAdminInfo.SchCode %>"/>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">AppKey：</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" style="width:400px;" id="SchAppKey"
+                                                       name="SchAppKey"
+                                                       type="text" value="<%= SchAdminInfo.SchAppKey %>"
+                                                       placeholder="AppKey">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">AppSecret：</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" style="width:400px;" id="SchAppSecret"
+                                                       name="SchAppSecret"
+                                                       type="text" value="<%= SchAdminInfo.SchAppSecret %>"
+                                                       placeholder="AppSecret">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">学校名称：</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" style="width:400px;" id="SchName"
+                                                       name="SchName"
+                                                       type="text" value="<%= SchAdminInfo.SchName %>"
+                                                       placeholder="学校名称">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">上午课节数：</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" style="width:400px;" id="MorningLesson"
+                                                       name="MorningLesson" type="number"
+                                                       value="<%= SchAdminInfo.MorningLesson %>"
+                                                       placeholder="上午课节数">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">下午课节数：</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" style="width:400px;" id="AfternoonLesson"
+                                                       name="AfternoonLesson" type="number"
+                                                       value="<%= SchAdminInfo.AfternoonLesson %>"
+                                                       placeholder="下午课节数">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">晚上课节数：</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" style="width:400px;" id="EveningLesson"
+                                                       name="EveningLesson" type="number"
+                                                       value="<%= SchAdminInfo.EveningLesson %>"
+                                                       placeholder="晚上课节数，晚上没有课节请填 0 ">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <button type="button" id="btnok" class="btn btn-primary">保存</button>
+                                                <button type="button" id="btngoback" class="btn btn-default">返回</button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10" style="color:red"
+                                                 id="div_error"></div>
+                                        </div>
+                                        <input name="SchAdminState" type="hidden" value="1">
+                                        <input name="SchAdminRoleType" type="hidden" value="2">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<% include ../common/bottom.ejs %>
+</body>
+</html>

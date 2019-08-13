@@ -1,0 +1,132 @@
+<% include ../common/head.ejs %>
+<script src="/admin/js/jquery.form.js"></script>
+<script>
+    $(function () {
+        $("#btnok").click(function () {
+            updatepwd();
+        });
+    });
+
+    function updatepwd() {
+        var oldpwd = $("#oldpwd").val();
+        var newpwd = $("#newpwd").val();
+        var newpwd2 = $("#newpwd2").val();
+        if (oldpwd == "") {
+            layer.msg('旧密码不能为空');
+            return;
+        }
+        if (newpwd == "" || newpwd.length < 6 || newpwd.length > 20) {
+            layer.msg('新密码不能为空，且长度再6-20位');
+            return;
+        }
+        if (newpwd2 == "" || newpwd2.length < 6 || newpwd2.length > 20) {
+            layer.msg('重复新密码不能为空，且长度再6-20位');
+            return;
+        }
+        if (newpwd != newpwd2) {
+            layer.msg("两次新密码输入不一致");
+            return;
+        }
+        layer.msg("处理中，请稍后...", {
+            shade: [0.5, '#000']
+        });
+        $.ajax({
+            url: '/account/updatepwd',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                oldpwd: oldpwd,
+                newpwd: newpwd
+            },
+            success: function (data) {
+                if (data.ret_code === 0) {
+                    layer.msg('密码修改成功', {
+                        icon: 1
+                    });
+                } else if (data.ret_code === 2) {
+                    layer.msg('旧密码错误', {
+                        icon: 5
+                    });
+                } else {
+                    layer.msg('密码修改失败', {
+                        icon: 5
+                    });
+                }
+            }
+        });
+    }
+</script>
+
+<body>
+    <% include ../common/top.ejs %>
+    <input type="hidden" id="leftFirstNavID" value="systemsetting" />
+    <input type="hidden" id="leftSecondNavID" value="account" />
+    <input type="hidden" id="leftThirdNavID" value="updatepwd" />
+    <section id="page">
+        <% include ../common/left.ejs %>
+        <div id="main-content">
+            <div class="container">
+                <div class="row">
+                    <div id="content" class="col-lg-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="page-header">
+                                    <ul class="breadcrumb">
+                                        <li>
+                                            <i class="fa fa-home"></i>
+                                            <a href="/admin/">我的工作台</a>
+                                        </li> 
+                                        <li>密码修改</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="box border">
+                                    <div class="box-body big">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td style="width:150px;" scope="row">旧密码</td>
+                                                <td>
+                                                    <input class="form-control" style="width:400px;" type="text"
+                                                        id="oldpwd" name="oldpwd" ／>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">新密码</td>
+                                                <td>
+                                                    <input class="form-control" style="width:400px;" type="text"
+                                                        id="newpwd" name="newpwd" ／>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">重复新密码</td>
+                                                <td>
+                                                    <input class="form-control" style="width:400px;" type="text"
+                                                        id="newpwd2" name="newpwd2" ／>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <button type="button" id="btnok"
+                                                        class="btn btn-primary">修改密码</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <% include ../common/bottom.ejs %>
+</body>
+
+</html>

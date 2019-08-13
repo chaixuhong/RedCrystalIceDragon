@@ -1,0 +1,26 @@
+<header class="navbar clearfix" id="header">
+    <div class="container">
+        <div class="navbar-brand">
+            <a href="/admin/">
+                华夏众安数据管理系统
+            </a>
+            <div id="sidebar-collapse" class="sidebar-collapse btn">
+                <i class="fa fa-bars" data-icon1="fa fa-bars" data-icon2="fa fa-bars"></i>
+            </div>
+        </div>
+        <ul class="nav navbar-nav pull-right">
+            <li class="dropdown user" id="header-user">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img alt="" src="<%= session.user.sys_photo %>" />
+                    <span class="username"><%= session.user.sys_name %></span>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/admin/account/accountinfo"><i class="fa fa-user"></i> 个人信息</a></li>
+                    <li><a href="/admin/account/updatepwd"><i class="fa fa-cog"></i> 密码修改</a></li>
+                    <li><a href="/admin/login/logout"><i class="fa fa-power-off"></i> 退出登录</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</header>

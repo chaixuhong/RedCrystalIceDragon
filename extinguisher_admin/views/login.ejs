@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>华夏众安管理系统-登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" type="text/css" href="/admin/css/cloud-admin.css">
+    <link href="/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <script src="/admin/js/jquery-2.0.3.min.js"></script>
+    <script src="/admin/js/ajaxsetup.js"></script>
+    <script src="/admin/layer/layer.js"></script>
+    <script type="text/javascript">
+        $("body").keydown(function () {
+            if (event.keyCode == "13") {
+                $("#btnlogin").click();
+            }
+        });
+        $(function () {
+            $('#btnlogin').click(function () {
+                var name = $("#name").val();
+                var password = $("#password").val();
+
+                if (name == "") {
+                    layer.msg("请输入管理账号", {
+                        icon: 5
+                    });
+                    return;
+                }
+                if (password == "") {
+                    layer.msg("请输入管理密码", {
+                        icon: 5
+                    });
+                    return;
+                }
+                $.ajax({
+                    url: '/login',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        name: $('#name').val(),
+                        password: $('#password').val()
+                    },
+                    success: function (data) {
+                        if (data.ret_code === 0) {
+                            window.location = "/admin/workbench";
+                        } else {
+                            layer.msg(data.ret_msg, {
+                                icon: 5
+                            });
+                        }
+                    }
+                });
+            });
+        });
+
+        function keyLogin() {
+            if (event.keyCode == 13) {
+                $('#btnlogin').click();
+            }
+        }
+    </script>
+</head>
+
+<body class="login" onkeydown="keyLogin();">
+    <section id="page">
+        <section id="login" class="visible">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <div class="login-box-plain">
+                            <h2 class="bigintro">华夏众安数据管理系统</h2>
+                            <div class="divide-40"></div>
+                            <form role="form">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">管理账号</label>
+                                    <i class="fa fa-user"></i>
+                                    <input type="text" class="form-control" id="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">管理密码</label>
+                                    <i class="fa fa-lock"></i>
+                                    <input type="password" class="form-control" id="password">
+                                </div>
+                                <button type="button" id="btnlogin" class="btn btn-danger">登录</button>
+                            </form>
+                            <div class="login-helpers">
+                                <!-- V1.0.0 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</body>
+
+</html>

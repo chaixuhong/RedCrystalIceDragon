@@ -1,0 +1,220 @@
+<style>
+    .thirdMenu>a {
+        background: #f5f6f6 !important;
+        font-weight: bold;
+    }
+
+    .sub-sub>li>a>span {
+        margin-left: 20px;
+    }
+
+    .sub-sub>li:before {
+        border-top: 1px dotted #3b3b3b;
+        content: "";
+        display: inline-block;
+        position: absolute;
+        width: 40px;
+        margin: 7% 0 0;
+    }
+
+    ul {
+        padding: 0;
+    }
+</style>
+<div id="sidebar" class="sidebar">
+    <div class="sidebar-menu nav-collapse">
+        <ul>
+            <li class="active">
+                <a href="/admin/workbench">
+                    <i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">我的工作台</span>
+                    <span class="selected"></span>
+                </a>
+            </li>
+            <li id="yearly_inspection" class="has-sub">
+                <a href="javascript:;" class=""><i class="fa fa-check-square-o fa-fw"></i> <span
+                        class="menu-text">年检管理</span><span class="arrow"></span></a>
+                <ul class="sub">
+                    <li id="yearly_inspection_list">
+                        <a class="" href="/admin/yearly_inspection/list"><span class="sub-menu-text">年检订单管理</span></a>
+                    </li>
+                    <li id="yearly_inspection_set">
+                        <a class="" href="/admin/yearly_inspection/set"><span class="sub-menu-text">年检服务标准设置</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li id="repair" class="has-sub">
+                <a href="javascript:;" class="">
+                    <i class="fa fa-wrench fa-fw"></i> <span class="menu-text">维修管理</span><span
+                        class="arrow"></span></a>
+                <ul class="sub">
+                    <li id="repair_list">
+                        <a class="" href="/admin/repair/list"><span class="sub-menu-text">维修订单管理</span></a>
+                    </li>
+                    <li id="repair_set">
+                        <a class="" href="/admin/repair/set"><span class="sub-menu-text">维修服务标准设置</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li id="scrap" class="has-sub">
+                <a href="javascript:;" class="">
+                    <i class="fa fa-trash-o fa-fw"></i> <span class="menu-text">报废管理</span><span
+                        class="arrow"></span></a>
+                <ul class="sub">
+                    <li id="scrap_list">
+                        <a class="" href="/admin/scrap/list"><span class="sub-menu-text">报废订单管理</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li id="finance" class="has-sub">
+                <a href="javascript:;" class="">
+                    <i class="fa fa-money fa-fw"></i> <span class="menu-text">财务管理</span><span class="arrow"></span></a>
+                <ul class="sub">
+                    <li id="finance_list">
+                        <a class="" href="/admin/finance/list"><span class="sub-menu-text">收入订单管理</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li id="finance" class="has-sub">
+                <a href="javascript:;" class="">
+                    <i class="fa fa-eye fa-fw"></i> <span class="menu-text">账号审批</span><span class="arrow"></span></a>
+                <ul class="sub">
+                    <li id="finance_list">
+                        <a class="" href="/admin/finance/list"><span class="sub-menu-text">账号注册申请审批管理</span></a>
+                    </li>
+                    <li id="finance_list">
+                        <a class="" href="/admin/finance/list"><span class="sub-menu-text">二维码申请管理</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li id="finance" class="has-sub">
+                <a href="javascript:;" class="">
+                    <i class="fa fa-sitemap fa-fw"></i> <span class="menu-text">监管单位</span><span
+                        class="arrow"></span></a>
+                <ul class="sub">
+                    <li id="finance_list">
+                        <a class="" href="/admin/finance/list"><span class="sub-menu-text">监管单位管理</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li id="finance" class="has-sub">
+                <a href="javascript:;" class="">
+                    <i class="fa fa-users fa-fw"></i> <span class="menu-text">采购企业</span><span class="arrow"></span></a>
+                <ul class="sub">
+                    <li id="finance_list">
+                        <a class="" href="/admin/finance/list"><span class="sub-menu-text">采购企业管理</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li id="finance" class="has-sub">
+                <a href="javascript:;" class="">
+                    <i class="fa fa-building-o fa-fw"></i> <span class="menu-text">年检厂</span><span
+                        class="arrow"></span></a>
+                <ul class="sub">
+                    <li id="finance_list">
+                        <a class="" href="/admin/finance/list"><span class="sub-menu-text">年检厂管理</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li id="finance" class="has-sub">
+                <a href="javascript:;" class="">
+                    <i class="fa fa-truck fa-fw"></i> <span class="menu-text">物流人员</span><span class="arrow"></span></a>
+                <ul class="sub">
+                    <li id="finance_list">
+                        <a class="" href="/admin/finance/list"><span class="sub-menu-text">物流人员管理</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li id="finance" class="has-sub">
+                <a href="javascript:;" class="">
+                    <i class="fa  fa-warning fa-fw"></i> <span class="menu-text">消防演练</span><span
+                        class="arrow"></span></a>
+                <ul class="sub">
+                    <li id="finance_list">
+                        <a class="" href="/admin/finance/list"><span class="sub-menu-text">消防演练申请单管理</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li id="finance" class="has-sub">
+                <a href="javascript:;" class="">
+                    <i class="fa fa-list-ul fa-fw"></i> <span class="menu-text">知识文章</span><span
+                        class="arrow"></span></a>
+                <ul class="sub">
+                    <li id="finance_list">
+                        <a class="" href="/admin/finance/list"><span class="sub-menu-text">知识文章管理</span></a>
+                    </li>
+                    <li id="finance_list">
+                        <a class="" href="/admin/finance/list"><span class="sub-menu-text">知识文章分类管理</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li id="sys_set" class="has-sub">
+                <a href="javascript:;" class=""><i class="fa fa-gears"></i> <span class="menu-text">系统设置</span><span
+                        class="arrow"></span></a>
+                <ul class="sub">
+                    <li id="" class="has-sub-sub">
+                        <a href="javascript:;" class=""><span class="sub-menu-text">基础数据</span>
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="sub-sub" style="display: none;">
+                            <li id="alluserinfo_list"><a class="" href="/admin/alluserinfo/list"><span
+                                        class="sub-menu-text">行政区域</span></a></li>
+                            <li id="classinfo_list"><a class="" href="/admin/classinfo/list"><span
+                                        class="sub-menu-text">灭火器类型</span></a></li>
+                            <li id="classinfo_list"><a class="" href="/admin/classinfo/list"><span
+                                        class="sub-menu-text">灭火器充装</span></a></li>
+                            <li id="classinfo_list"><a class="" href="/admin/classinfo/list"><span
+                                        class="sub-menu-text">灭火器容量</span></a></li>
+                            <li id="classinfo_list"><a class="" href="/admin/classinfo/list"><span
+                                        class="sub-menu-text">灭火器适用场景</span></a></li>
+                            <li id="classinfo_list"><a class="" href="/admin/classinfo/list"><span
+                                        class="sub-menu-text">灭火器适用环境</span></a></li>
+                        </ul>
+                    </li>
+                    <li id="sys_set_power" class="has-sub-sub">
+                        <a href="javascript:;" class=""><span class="menu-text">权限设置</span><span
+                                class="arrow"></span></a>
+                        <ul class="sub-sub" style="display: none;">
+                            <li id="sys_set_power_admin"><a class="" href="/admin/sys_admin/sys_admin_list"><span
+                                        class="sub-menu-text">管理员账号</span></a></li>
+                            <li id="sys_set_power_role"><a class="" href="/admin/account/updatepwd"><span
+                                        class="sub-menu-text">系统角色</span></a></li>
+                            <li id="sys_set_power_menu"><a class="" href="/admin/account/updatepwd"><span
+                                        class="sub-menu-text">系统角色菜单</span></a></li>
+                        </ul>
+                    </li>
+                    <li id="account" class="has-sub-sub">
+                        <a href="javascript:;" class=""><span class="menu-text">网站设置</span><span
+                                class="arrow"></span></a>
+                        <ul class="sub-sub" style="display: none;">
+                            <li id="accountinfo"><a class="" href="/admin/account/accountinfo"><span
+                                        class="sub-menu-text">站点信息</span></a></li>
+                            <li id="updatepwd"><a class="" href="/admin/account/updatepwd"><span
+                                        class="sub-menu-text">友情链接</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+    /*用于处理后台左侧菜单一二级选中样式*/
+    $(function () {
+        var f = $("#leftFirstNavID").val();
+        var s = $("#leftSecondNavID").val();
+        var t = $("#leftThirdNavID").val();
+        $(".sidebar-menu nav-collapse li").each(function () {
+            $(this).attr("class", "has-sub");
+        });
+        if (f != "") $("#" + f).attr("class", "has-sub active");
+        if (t) {
+            if (s != "") {
+                $("#" + s).attr("class", "has-sub-sub open");
+                $("#" + s).children(".sub-sub").show();
+                $("#" + t).attr("class", "thirdMenu");
+            }
+        } else {
+            if (s != "") $("#" + s).attr("class", "has-sub active");
+        }
+    });
+</script>

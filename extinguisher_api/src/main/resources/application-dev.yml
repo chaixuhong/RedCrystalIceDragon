@@ -1,0 +1,74 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /exapi
+  compression:
+    enabled: true
+    min-response-size: 1024
+    mime-types:
+    - application/json
+# mysql config
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/blog?useUnicode=false&autoReconnect=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+      username: root
+      password: mimajiubugaosuni
+      driver-class-name: com.mysql.jdbc.Driver
+      filters: stat,wall
+      initialSize: 10
+      minIdle: 10
+      maxActive: 100
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: false
+      maxPoolPreparedStatementPerConnectionSize: 0
+      removeAbandoned: true
+      removeAbandonedTimeoutMillis: 20000
+      logAbandoned: true
+      logDifferentThread: true
+      connectionProperties:  druid.stat.mergeSql=true;druid.stat.logSlowSql=true;druid.stat.slowSqlMillis=3000
+      useGlobalDataSourceStat: true
+        # Druid 监控 Servlet 配置参数
+      druidRegistrationUrl: /druid/*
+      resetEnable: true
+      loginUsername: admin
+      loginPassword: admin
+      # Druid 监控过滤相关配置参数
+      filtersUrlPatterns: /*
+      exclusions: '*.js,*.gif,*.jpg,*.jpeg,*.png,*.css,*.ico,*.jsp,/druid/*,/swagger-*,/v2/*'
+      sessionStatMaxCount: 2000
+      sessionStatEnable: true
+      principalSessionName: session_user_key
+      profileEnable: true
+  mvc:
+    favicon:
+      enabled: false
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+# http请求配置
+http-config:
+  maxTotal: 200
+  defaultMaxPerRoute: 100
+  connectTimeout: 5000
+  connectionRequestTimeout: 1000
+  socketTimeout: 60000
+  validateAfterInactivity: 2000
+###swagger
+swagger:
+  enable: true
+# mybatis
+mybatis:
+  mapper-locations: classpath:mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+# logging
+logging:
+  config: classpath:logback-dev.xml

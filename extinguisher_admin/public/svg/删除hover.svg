@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>删除hover</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="课程表_PC2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon" transform="translate(-930.000000, -70.000000)" fill="#4F87FB">
+            <path d="M943.414214,82 L948.363961,77.0502525 L946.949747,75.636039 L942,80.5857864 L937.050253,75.636039 L935.636039,77.0502525 L940.585786,82 L935.636039,86.9497475 L937.050253,88.363961 L942,83.4142136 L946.949747,88.363961 L948.363961,86.9497475 L943.414214,82 Z M942,93 C935.924868,93 931,88.0751322 931,82 C931,75.9248678 935.924868,71 942,71 C948.075132,71 953,75.9248678 953,82 C953,88.0751322 948.075132,93 942,93 Z" id="删除hover"></path>
+        </g>
+    </g>
+</svg>

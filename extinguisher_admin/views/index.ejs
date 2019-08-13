@@ -1,0 +1,46 @@
+<% include common/head.ejs %>
+
+<body>
+    <% include common/top.ejs %>
+    <script src="/admin/js/echarts.min.js"></script>
+    <input type="hidden" id="leftFirstNavID" value="workbench" />
+    <section id="page">
+        <% include common/left.ejs %>
+        <div id="main-content">
+            <div class="container">
+                <div class="row">
+                    <div id="content" class="col-lg-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="page-header">
+                                    <ul class="breadcrumb">
+                                        <li>
+                                            <i class="fa fa-home"></i>
+                                            <a href="/admin/">我的工作台</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel-body">
+                                    <h3>我的工作台</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <% include common/bottom.ejs %>
+</body>
+
+</html>
+
+<script>
+    $(function () {
+
+    });
+</script>

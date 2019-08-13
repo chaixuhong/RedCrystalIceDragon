@@ -1,0 +1,160 @@
+<% include ../common/head.ejs %>
+
+<body>
+    <% include ../common/top.ejs %>
+    <input type="hidden" id="leftFirstNavID" value="systemsetting" />
+    <input type="hidden" id="leftSecondNavID" value="account" />
+    <input type="hidden" id="leftThirdNavID" value="accountinfo" />
+    <style>
+        .table>tbody>tr>td {
+            vertical-align: middle;
+        }
+    </style>
+    <script>
+        $(function () {
+            $("#btnok").click(function () {
+                saveAccountInfo();
+            });
+            $("#btnaddfile").click(function () {
+                $("input[type=file]").click();
+            });
+        });
+
+        function setImageUrl(url) {
+            $("#sys_photo").val(url);
+            $("#img_sys_photo").html('<img style="width: 150px; height:150px;border:1px solid#e4e4e4;" src="' + url +
+                '"/>');
+        }
+
+        function saveAccountInfo() {
+
+            var sys_name = $("#sys_name").val();
+            var sys_photo = $("#sys_photo").val();
+
+            if (sys_name == "") {
+                layer.msg('个人名称不能为空');
+                return;
+            }
+            if (sys_photo == "") {
+                layer.msg('个人头像不能为空');
+                return;
+            }
+            layer.msg("处理中，请稍后...", {
+                shade: [0.5, '#000']
+            });
+            $.ajax({
+                url: '/account/updateinfo',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    sys_name: sys_name,
+                    sys_photo: sys_photo
+                },
+                success: function (data) {
+                    if (data.ret_code === 0) {
+                        layer.msg('保存成功', {
+                            icon: 1
+                        });
+                    } else {
+                        layer.msg('保存失败', {
+                            icon: 5
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+    <script src="/admin/js/jquery.form.js"></script>
+    <section id="page">
+        <% include ../common/left.ejs %>
+        <div id="main-content">
+            <div class="container">
+                <div class="row">
+                    <div id="content" class="col-lg-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="page-header">
+                                    <ul class="breadcrumb">
+                                        <li>
+                                            <i class="fa fa-home"></i>
+                                            <a href="/admin/workbench">我的工作台</a>
+                                        </li>
+                                        <li>个人信息</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel border">
+                                    <div class="panel-body">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td style="width:150px;" scope="row">个人头像</td>
+                                                <td>
+                                                    <div id="img_sys_photo"
+                                                        style="width: 150px; height:150px;border:1px solid#e4e4e4;">
+                                                        <img style="width: 150px; height:150px;border:1px solid#e4e4e4;"
+                                                            src="<%= session.user.sys_photo %>" />
+                                                    </div>
+                                                    <input type="hidden" id="sys_photo" name="sys_photo"
+                                                        value="<%= session.user.sys_photo %>" />
+
+                                                    <form class="form-horizontal" role="form"
+                                                        action='/admin/jcrop/add_local_file' method="post"
+                                                        id="localfileform" enctype="application/x-www-form-urlencoded">
+                                                        <input type="hidden" id="PortalBannerUrl" name="PortalBannerUrl"
+                                                            value="" />
+                                                        <div id="div_image" style="float: left;"></div>
+                                                        <input type="file" id="ImageUrl" name="ImageUrl"
+                                                            accept="image/png,image/jpg"
+                                                            onchange="OpenJcropImage(this,'0_0_150_150','150_150','1_1')"
+                                                            value="" style="width: 0px; display: none" />
+                                                        <a id="btnaddfile" href="javascript:;">更改头像</a>
+                                                    </form>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">个人名称</td>
+                                                <td>
+                                                    <input class="form-control" style="width:400px;" type="text"
+                                                        id="sys_name" name="sys_name"
+                                                        value="<%= SysAdminInfo.sys_name %>" ／>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">登录账号</td>
+                                                <td>
+                                                    <input disabled class="form-control" style="width:400px;"
+                                                        type="text" id="sys_login_id" name="sys_login_id"
+                                                        value="<%= SysAdminInfo.sys_login_id %>" ／>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">系统角色</td>
+                                                <td>
+                                                    <input disabled class="form-control" style="width:400px;"
+                                                        type="text" id="StudentRegPhotoUrl" name="StudentRegPhotoUrl"
+                                                        value="<%= SysAdminInfo.role_name %>" ／>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <button type="button" id="btnok"
+                                                        class="btn btn-primary">保存信息</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <% include ../common/bottom.ejs %>
+</body>

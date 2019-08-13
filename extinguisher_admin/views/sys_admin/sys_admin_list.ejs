@@ -1,0 +1,264 @@
+<% include ../common/head.ejs %>
+
+<body>
+    <% include ../common/top.ejs %>
+    <link href="../bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+    <script src="../bootstrap-table/bootstrap-table.js"></script>
+    <script src="../bootstrap-table/bootstrap-table-zh-CN.js"></script>
+    <input type="hidden" id="leftFirstNavID" value="sys_set" />
+    <input type="hidden" id="leftSecondNavID" value="sys_set_power" />
+    <input type="hidden" id="leftThirdNavID" value="sys_set_power_admin" />
+    <section id="page">
+        <% include ../common/left.ejs %>
+        <div id="main-content">
+            <div class="container">
+                <div class="row">
+                    <div id="content" class="col-lg-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="page-header">
+                                    <ul class="breadcrumb">
+                                        <li>
+                                            <i class="fa fa-home"></i>
+                                            <a href="/admin/workbench">我的工作台</a>
+                                        </li>
+                                        <li>系统设置</li>
+                                        <li>权限设置</li>
+                                        <li>管理员账号列表</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel border">
+                                    <div class="panel-body">
+                                        <form class="form-inline" role="form" action='' method="" id="formSearch"
+                                            enctype="multipart/form-data">
+                                            <div class="form-group">
+                                                登录账号
+                                            </div>
+                                            <div class="form-group">
+                                                <input id="sys_login_id" name="sys_login_id" type="text"
+                                                    class="form-control" placeholder="登录账号">
+                                            </div>
+                                            <div class="form-group">
+                                                账号状态
+                                            </div>
+                                            <div class="form-group">
+                                                <select id="sys_state" class="form-control">
+                                                    <option value="">全部</option>
+                                                    <option value="1">启用中</option>
+                                                    <option value="0">已禁用</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <button id="btnSearch" type="button" class="btn btn-primary">
+                                                    <i class="fa fa-search"></i>
+                                                    <span>查询</span>
+                                                </button>
+                                                <button id="btnAdd" type="button" class="btn btn-info">
+                                                    <i class="fa fa-plus"></i>
+                                                    <span>添加</span>
+                                                </button>
+                                                <button id="btnClearForm" type="button" class="btn btn-default"
+                                                    data-toggle="tooltip" data-placement="top" title="点击清空所有查询条件">
+                                                    <i class="fa fa-trash-o"></i>
+                                                    <span>清空</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                        <table id="data_container">
+                                            <div id="toolbar">
+                                            </div>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <% include ../common/bottom.ejs %>
+</body>
+
+</html>
+<script>
+    //禁用启用
+    function UpdataState(sys_login_id, state) {
+        var msg = state == 1 ? '禁用' : '启用';
+        state = state == 1 ? 0 : 1;
+        //询问框
+        layer.confirm('您确定要' + msg + '此学校管理员账号吗？', {
+            btn: [msg, '取消']
+        }, function () {
+            layer.msg("处理中，请稍后...", {
+                shade: [0.5, '#000']
+            });
+            $.ajax({
+                url: '/sys_admin/updatestate?sys_login_id=' + sys_login_id + '&state=' + state,
+                type: 'get',
+                dataType: 'json',
+                data: '',
+                success: function (data) {
+                    if (data.ret_code == 0) {
+                        layer.msg(msg + '成功', {
+                            icon: 1
+                        });
+                        $('#data_container').bootstrapTable(('refresh'));
+                    } else if (data.ret_code == 1) {
+                        layer.msg(msg + '失败，' + data.ret_msg, {
+                            icon: 5
+                        });
+                    }
+                }
+            });
+        }, function () {});
+    }
+
+    $(function () {
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+        //1.初始化Table
+        var oTable = new TableInit();
+        oTable.Init();
+
+        //2.初始化Button的点击事件
+        var oButtonInit = new ButtonInit();
+        oButtonInit.Init();
+
+        //查询
+        $("#btnSearch").click(function () {
+            $('#data_container').bootstrapTable('selectPage', 1);
+            $('#data_container').bootstrapTable(('refresh'));
+        });
+
+        //添加
+        $("#btnAdd").click(function () {
+            window.location = '/admin/sys_admin/add';
+        });
+
+        //导出
+        $("#btnExport").click(function () {
+            layer.confirm('1、导出数据的筛选条件为当前列表的查询条件' +
+                '<br/>2、Excel中排序方式为当前列表排序方式' +
+                '<br/>是否继续导出数据到Excle？', {
+                    btn: ['导出', '取消']
+                },
+                function () {
+                    window.location = '/admin/sys_admin/exportxlsx' +
+                        '?sys_login_id=' + $("#sys_login_id").val() +
+                        '&sys_state=' + $("#sys_state").val() +
+                        '&sortName=' + $('#data_container').bootstrapTable('getOptions',
+                            'queryParams').sortName +
+                        '&sortOrder=' + $('#data_container').bootstrapTable('getOptions',
+                            'queryParams').sortOrder;
+                    layer.closeAll();
+                },
+                function () {});
+        });
+
+        //清空
+        $("#btnClearForm").click(function () {
+            $(':input', '#formSearch').not(':button, :submit, :reset, :hidden').val('').removeAttr(
+                'checked').removeAttr('selected');
+            $('#data_container').bootstrapTable('selectPage', 1);
+            $('#data_container').bootstrapTable('refresh');
+        });
+
+    });
+
+    var TableInit = function () {
+        var oTableInit = new Object();
+        //初始化Table
+        oTableInit.Init = function () {
+            $('#data_container').bootstrapTable({
+                url: '/sys_admin/getschadminlist', //请求后台的URL（*）
+                method: 'get', //请求方式（*）
+                toolbar: '#toolbar', //工具按钮用哪个容器
+                striped: true, //是否显示行间隔色
+                cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true, //是否显示分页（*）
+                queryParams: oTableInit.queryParams, //传递参数（*）
+                sortable: true, //是否启用排序
+                sortOrder: "desc", //排序方式
+                sortName: "sys_id", //默认排序字段
+                sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+                pageSize: 20, //每页的记录行数（*）
+                pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+                uniqueId: "sys_id", //每一行的唯一标识，一般为主键列
+                columns: [{
+                        field: 'sys_photo',
+                        title: '头像',
+                        sortable: false,
+                        formatter: function (value, row, index) {
+                            return `<img src='${row.sys_photo}' style='width:50px;height:50px;'>`;
+                        }
+                    },
+                    {
+                        field: 'sys_login_id',
+                        title: '登录账号',
+                        sortable: true
+                    },
+                    {
+                        field: 'role_name',
+                        title: '账号系统角色',
+                        sortable: true
+                    },
+                    {
+                        field: 'sys_state',
+                        title: '账号状态',
+                        sortable: true,
+                        formatter: function (value, row, index) {
+                            return row.sys_state == 0 ? '已禁用' : '启用中';
+                        }
+                    },
+                    {
+                        title: '操作',
+                        field: '#',
+                        align: 'center',
+                        formatter: function (value, row, index) {
+                            var txt = row.sys_state == 0 ? '启用' : '禁用';
+                            var a =
+                                `<a href="javascript:;" onclick="UpdataState('${row.sys_login_id}','${row.sys_state}')">${txt}</a>`;
+                            var b =
+                                `<a href="/admin/sys_admin/update?sys_login_id='${row.sys_login_id}'">编辑</a>`;
+                            if (row.role_type == 1)
+                                return '-';
+                            return a + '&nbsp;&nbsp;' + b;
+                        }
+                    }
+                ]
+            });
+        };
+
+        //得到查询的参数
+        oTableInit.queryParams = function (params) {
+            var temp = {
+                limit: params.limit, //页面大小
+                offset: params.offset, //页码
+                order: params.order,
+                sort: params.sort,
+                sys_login_id: $("#sys_login_id").val(),
+                sys_state: $("#sys_state").val()
+            };
+            return temp;
+        };
+        return oTableInit;
+    };
+
+
+    var ButtonInit = function () {
+        var oInit = new Object();
+        var postdata = {};
+
+        oInit.Init = function () {
+            //初始化页面上面的按钮事件
+        };
+
+        return oInit;
+    };
+</script>
